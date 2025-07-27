@@ -1,0 +1,153 @@
+
+.history-screen {
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    background-color: #000f250a;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #333;
+}
+
+.history-container {
+    width: 100%;
+    background-color: #44444428;
+    border-radius: 15px;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.history-container h1 {
+    color: #007bff;
+    text-align: center;
+    font-size: 2.5em;
+    padding-bottom: 10px;
+   
+}
+
+.history-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 40rem;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    overflow: hidden;
+}
+.history-card-header {
+    display: flex;
+    color: black;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.history-card-header p{
+  
+    font-size: 18px;
+}
+
+.history-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.history-card h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.expanded-section {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.expanded-section p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 1.05em;
+    line-height: 1.4;
+}
+
+.expanded-section p strong {
+    color: #333;
+}
+
+.exercise-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid #e0e0e0;
+}
+
+.exercise-container h4 {
+    font-size: 1.3em;
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #cce5ff;
+    padding-bottom: 5px;
+}
+
+.exercise-container p {
+    margin: 5px 0;
+    color: #444;
+}
+.exercise-details{
+
+}
+
+@media (max-width: 768px) {
+    .history-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        padding: 0 15px;
+
+    }
+    .history-card{
+        width: 85%;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .history-card h2 {
+        font-size: 1.5em;
+    }
+
+    .expanded-section p,
+    .exercise-container p {
+        font-size: 0.95em;
+    }
+    .exercise-container{
+        display: flex;
+        flex-direction: column;
+    }
+        .history-card-header{
+        display: flex;
+        flex-direction: column;
+    font-size: 14px;
+}
+    .history-card-header p{
+   
+    font-size: 14px;
+}
+}
