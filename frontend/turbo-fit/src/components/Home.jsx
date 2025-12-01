@@ -18,7 +18,7 @@ export default function Home({ user }) {
     }
     
   
-  axios.get(`http://192.168.1.15:8081/api/users/${storedUser.userId}/car`, {
+  axios.get(`http://localhost:8081/api/users/${storedUser.userId}/car`, {
   auth: { username: storedUser.username, password: storedUser.password }
 })
 .then(res => {
@@ -32,7 +32,7 @@ export default function Home({ user }) {
   }
 });
 
-  axios.get(`http://192.168.1.15:8081/api/users/${storedUser.userId}`, {
+  axios.get(`http://localhost:8081/api/users/${storedUser.userId}`, {
     auth: { username:storedUser.username, password:storedUser.password }
   })
   .then(res => {
@@ -49,7 +49,7 @@ export default function Home({ user }) {
 
   const handleAddHP = () => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
-  axios.put(`http://192.168.1.15:8081/api/cars/update-horsepower/${storedUser.userId}`, {
+  axios.put(`http://localhost:8081/api/cars/update-horsepower/${storedUser.userId}`, {
     auth: {
       username: storedUser.username,
       password: storedUser.password
@@ -103,7 +103,7 @@ const calculateWorkoutRank = (totalWorkouts) => {
         <div className="car-info">
           <h3>Selected Car</h3>
           <img
-            src={`http://192.168.1.15:8081${car.baseCar.imageUrl}`}
+            src={`http://localhost:8081${car.baseCar.imageUrl}`}
             alt={car.carName}
             style={{ width: 200, borderRadius: 10 }}
           />

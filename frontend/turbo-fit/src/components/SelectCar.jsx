@@ -22,7 +22,7 @@ const navigate = useNavigate();
       return;
     }
     console.log("User " +storedUser.username)
-    axios.get('http://192.168.1.15:8081/api/cars', {
+    axios.get('http://localhost:8081/api/cars', {
   auth: {
     username: storedUser.username,
     password: storedUser.password
@@ -35,7 +35,7 @@ const navigate = useNavigate();
     console.log("Изпращам PUT заявка за userId:", userId, "carId:", carId);
 
 axios.put(
-  `http://192.168.1.15:8081/api/users/${userId}/selectCar/${carId}`,{
+  `http://localhost:8081/api/users/${userId}/selectCar/${carId}`,{
     auth: {
       username: user.username, 
       password: user.password 
@@ -61,7 +61,7 @@ axios.put(
             key={car.carId}
             onClick={() => handleSelect(car.carId)}
           >
-            <img src={`http://192.168.1.15:8081${car.imageUrl}`} alt={car.carName} />
+            <img src={`http://localhost:8081${car.imageUrl}`} alt={car.carName} />
             <h4>{car.carName}</h4>
             <p>{car.horsePower} HP</p>
           </div>

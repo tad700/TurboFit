@@ -40,7 +40,7 @@ export default function Workout() {
     const handleStartWorkout = async () => {
         try {
             const res = await axios.post(
-                `http://192.168.1.15:8081/api/workout/start/${storedUser.userId}`,
+                `http://localhost:8081/api/workout/start/${storedUser.userId}`,
                 {},
                 {
                     auth: {
@@ -91,7 +91,7 @@ export default function Workout() {
 
         
         await axios.post(
-            `http://192.168.1.15:8081/api/exercises/addToWorkout/${workoutId}`,
+            `http://localhost:8081/api/exercises/addToWorkout/${workoutId}`,
             exercisePayloads,
             {
                 auth: {
@@ -103,7 +103,7 @@ export default function Workout() {
 
         
         const res = await axios.post(
-            `http://192.168.1.15:8081/api/workout/${workoutId}/finish`,
+            `http://localhost:8081/api/workout/${workoutId}/finish`,
             {
                 name:workoutName
             },
@@ -144,7 +144,7 @@ const handleCancel = () => {
 
     const handleAddExerciseClick = async () => {
         try {
-            const res = await axios.get('http://192.168.1.15:8081/api/exercises', {
+            const res = await axios.get('http://localhost:8081/api/exercises', {
                 auth: {
                     username: storedUser.username,
                     password: storedUser.password,

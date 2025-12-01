@@ -23,7 +23,7 @@ const Login = ({setIsLoggedIn, setLoggedUser}) => {
     };
 
     try {
-      const response = await axios.post('http://192.168.1.15:8081/auth/login', data,);
+      const response = await axios.post('http://localhost:8081/auth/login', data,);
 
       console.log('Login response:', response.data);
 
