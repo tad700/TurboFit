@@ -24,7 +24,6 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private String phone;
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private UserCar userCar;
@@ -71,7 +70,6 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
                 ", role='" + role + '\'' +
                 ", points=" + points +
                 '}';

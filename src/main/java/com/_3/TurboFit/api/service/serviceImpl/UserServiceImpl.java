@@ -64,7 +64,6 @@ public class UserServiceImpl implements UserService {
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setPhone(dto.getPhone());
         user.setRole("USER");
 
         User saved = userRepository.save(user);
@@ -115,7 +114,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setPhone(userDto.getPhone());
         user.setTotalWorkouts(userDto.getTotalWorkouts());
         user.setRole(userDto.getRole());
         user.setPoints(userDto.getPoints());
@@ -142,7 +140,6 @@ public UserResponseDTO mapToUserResponseDTO(User user){
 
     userResponseDTO.setRole(user.getRole());
     userResponseDTO.setEmail(user.getEmail());
-    userResponseDTO.setPhone(user.getPhone());
     userResponseDTO.setCar(user.getUserCar());
     userResponseDTO.setPoints(user.getPoints());
     userResponseDTO.setTotalWorkouts(user.getTotalWorkouts());
