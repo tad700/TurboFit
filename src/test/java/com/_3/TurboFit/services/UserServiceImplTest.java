@@ -52,7 +52,6 @@ public class UserServiceImplTest {
         saved.setUsername("Todor");
         saved.setEmail("todo@example.com");
         saved.setPassword("pass");
-        saved.setPhone("0888123456");
         saved.setRole("USER");
         when(userRepository.save(any(User.class)))
                 .thenReturn(saved);
@@ -80,7 +79,6 @@ public class UserServiceImplTest {
         saved.setUsername("Petur");
         saved.setEmail("petur@example.com");
         saved.setPassword("pass");
-        saved.setPhone("083234456");
         saved.setRole("USER");
 
         User saved1 = new User();
@@ -88,7 +86,6 @@ public class UserServiceImplTest {
         saved.setUsername("Todor");
         saved.setEmail("todo@example.com");
         saved.setPassword("pass");
-        saved.setPhone("0888123456");
         saved.setRole("USER");
 
         userRepository.save(saved);
@@ -112,7 +109,7 @@ public class UserServiceImplTest {
         user.setUserId(userId);
         user.setUsername("Petur");
         user.setRole("USER");
-        assertNull(user.getCar());
+        assertNull(user.getUserCar());
 
         Car car = new Car();
         car.setCarId(carId);
@@ -133,14 +130,14 @@ public class UserServiceImplTest {
         verify(carRepository,  times(1)).findById(carId);
         verify(userRepository, times(1)).save(user);
 
-        assertNotNull(user.getCar(), "Поставената car не трябва да е null");
-        assertEquals(carId, user.getCar().getCarId());
-        assertEquals("Ferrari", user.getCar().getCarName());
+        assertNotNull(user.getUserCar(), "Поставената car не трябва да е null");
+        assertEquals(carId, user.getUserCar().getId());
+        assertEquals("Ferrari", user.getUserCar().getBaseCar().getCarName());
 
         assertEquals(userId, dto.getUserId());
         assertNotNull(dto.getCar());
-        assertEquals(carId, dto.getCar().getCarId());
-        assertEquals("Ferrari", dto.getCar().getCarName());
+        assertEquals(carId, dto.getCar());
+        assertEquals("Ferrari", dto.getCar().getBaseCar().getCarName());
     }
 
 

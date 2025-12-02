@@ -74,17 +74,6 @@ const Register = () => {
           />
         </div>
 
-        <div className='input'>
-          <input
-          name='tel'
-            type="tel"
-            placeholder='Phone'
-            required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
-
         <div className="submit-container">
           <button className="submit-btn" type="submit">
             Sign Up

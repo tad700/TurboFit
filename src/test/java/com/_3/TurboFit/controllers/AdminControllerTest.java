@@ -87,7 +87,7 @@ public class AdminControllerTest {
         car.setCarId(5L);
         car.setCarName("Tesla");
         car.setHorsePower(700);
-        returned.setCar(car);
+        returned.setCar(returned.getCar());
         returned.setTotalWorkouts(7);
         returned.setPoints(150);
 

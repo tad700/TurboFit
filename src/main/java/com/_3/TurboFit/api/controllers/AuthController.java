@@ -1,17 +1,20 @@
 package com._3.TurboFit.api.controllers;
 
-import com._3.TurboFit.api.dto.UserDTO;
 import com._3.TurboFit.api.dto.UserLoginDTO;
 import com._3.TurboFit.api.dto.UserRegisterDTO;
 import com._3.TurboFit.api.dto.UserResponseDTO;
 import com._3.TurboFit.api.models.User;
 import com._3.TurboFit.api.service.UserService;
+import com._3.TurboFit.api.service.serviceImpl.TokenService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,10 +27,13 @@ public class AuthController {
 
     UserService userService;
     AuthenticationManager authManager;
+    private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
+    private final TokenService tokenService;
 
-    public AuthController(UserService userService, AuthenticationManager authManager) {
+    public AuthController(UserService userService, AuthenticationManager authManager, TokenService tokenService) {
         this.userService = userService;
         this.authManager = authManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/register")
@@ -36,6 +42,13 @@ public class AuthController {
         UserResponseDTO created = userService.register(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+    @PostMapping("/token")
+    public String token(Authentication authentication){
+        LOG.debug("Token requested for user: ",authentication.getName());
+        String token =tokenService.generateToken(authentication);
+        LOG.debug("Token generated {}",token);
+        return token;
     }
 
     @PostMapping("/login")
