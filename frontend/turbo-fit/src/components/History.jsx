@@ -21,7 +21,7 @@ useEffect(() =>{
 
 
 console.log(storedUser);
-axios.get(`http://localhost:8081/api/users/userWorkouts/${storedUser.userId}`,{
+axios.get(`http://localhost:8080/api/users/userWorkouts/${storedUser.userId}`,{
   auth:{ 
     username:user.username,
     password:user.password

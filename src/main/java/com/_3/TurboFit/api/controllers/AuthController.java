@@ -44,9 +44,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
     @PostMapping("/token")
-    public String token(Authentication authentication){
-        LOG.debug("Token requested for user: ",authentication.getName());
-        String token =tokenService.generateToken(authentication);
+    public String token(User user){
+        LOG.debug("Token requested for user: ",user.getUsername());
+        String token =tokenService.generateToken(user);
         LOG.debug("Token generated {}",token);
         return token;
     }
@@ -60,15 +60,15 @@ public class AuthController {
 
 
             User user = userService.findByUsername(dto.getUsername());
-
+            String token = tokenService.generateToken(user);
 
 
             Map<String, Object> response = new HashMap<>();
             response.put("userId", user.getUserId());
             response.put("username", user.getUsername());
+            response.put("token",token);
             response.put("car",user.getUserCar());
-            response.put("role",user.getRole());
-
+            System.out.println(response);
             return ResponseEntity.ok(response);
 
         } catch (BadCredentialsException ex) {

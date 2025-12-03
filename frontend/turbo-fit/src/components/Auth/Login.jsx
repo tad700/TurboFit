@@ -23,22 +23,22 @@ const Login = ({setIsLoggedIn, setLoggedUser}) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8081/auth/login', data,);
+      const response = await axios.post('http://localhost:8080/auth/login', data,);
 
       console.log('Login response:', response.data);
-
+      localStorage.setItem('token',response.data.token);
+      localStorage.setItem('userId',response.data.userId);
   const { username, userId } = response.data;
   const userData = {
       userId:  response.data.userId,
       username: response.data.username,
       car:      response.data.car,     
-      password,     
       points : response.data.points,
+      token : response.data.token,
       totalWorkouts   : response.data.tota,
       role: response.data.role       
     };
 setLoggedUser(userData);
-//console.log(userData);
 console.log(response.data);
 localStorage.setItem('user', JSON.stringify(userData));
 setIsLoggedIn(true);

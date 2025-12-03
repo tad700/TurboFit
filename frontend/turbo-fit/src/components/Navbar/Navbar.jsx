@@ -10,7 +10,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
  const storedUser = JSON.parse(localStorage.getItem('user'));
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.clear();
     setIsLoggedIn(false);
     navigate('/login');
   };

@@ -15,6 +15,7 @@ export default function Workout() {
     const [message, setMessage] = useState('');
 
     const storedUser = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const now = new Date();
@@ -40,15 +41,13 @@ export default function Workout() {
     const handleStartWorkout = async () => {
         try {
             const res = await axios.post(
-                `http://localhost:8081/api/workout/start/${storedUser.userId}`,
+                `http://localhost:8080/api/workout/start/${storedUser.userId}`,
                 {},
                 {
-                    auth: {
-                        username: storedUser.username,
-                        password: storedUser.password,
-                    },
-                }
-            );
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
             setWorkout(res);
             localStorage.setItem('currentWorkoutId', res.data.workoutId);
             setMessage('Workout started! Add exercises.');
@@ -91,29 +90,25 @@ export default function Workout() {
 
         
         await axios.post(
-            `http://localhost:8081/api/exercises/addToWorkout/${workoutId}`,
+            `http://localhost:8080/api/exercises/addToWorkout/${workoutId}`,
             exercisePayloads,
             {
-                auth: {
-                    username: storedUser.username,
-                    password: storedUser.password,
-                },
-            }
-        );
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
 
         
         const res = await axios.post(
-            `http://localhost:8081/api/workout/${workoutId}/finish`,
+            `http://localhost:8080/api/workout/${workoutId}/finish`,
             {
                 name:workoutName
             },
             {
-                auth: {
-                    username: storedUser.username,
-                    password: storedUser.password,
-                },
-            }
-        );
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
 
        
         localStorage.removeItem('currentWorkoutId');
@@ -144,7 +139,7 @@ const handleCancel = () => {
 
     const handleAddExerciseClick = async () => {
         try {
-            const res = await axios.get('http://localhost:8081/api/exercises', {
+            const res = await axios.get('http://localhost:8080/api/exercises', {
                 auth: {
                     username: storedUser.username,
                     password: storedUser.password,

@@ -21,7 +21,7 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8081/auth/register', data);
+      const response = await axios.post('http://localhost:8080/auth/register', data);
       alert('Успешно регистриран:', response.data);
       navigate("/login")
     } catch (error) {

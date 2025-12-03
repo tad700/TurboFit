@@ -3,26 +3,30 @@ import axios from 'axios';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function Home({ user }) {
+export default function Home({User}) {
   const [car, setCar] = useState(null);
   const [points, setPoints] = useState(0);
   const [totalWorkouts, setTotalWorkouts] = useState(0);
   const navigate = useNavigate();
-  const { username, userId, password } = user || {};
+  const [username,setUsername] =useState();
+  const [userId,setUserId] = useState(0);
 
   useEffect(() => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (!storedUser || !storedUser.username || !storedUser.password) {
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+    if (!storedUser || !storedUser.userId || !token) {
       navigate('/login');
       return;
     }
-    
-  
-  axios.get(`http://localhost:8081/api/users/${storedUser.userId}/car`, {
-  auth: { username: storedUser.username, password: storedUser.password }
-})
+  setUsername(storedUser.username || '');
+
+axios.get(`http://localhost:8080/api/users/${userId}/car`, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    })
 .then(res => {
-  console.log('Car data:', res.data);
   setCar(res.data);
 })
 .catch(err => {
@@ -30,12 +34,14 @@ export default function Home({ user }) {
   if (err.response?.status === 404) {
     setCar(null);
   }
-});
 
-  axios.get(`http://localhost:8081/api/users/${storedUser.userId}`, {
-    auth: { username:storedUser.username, password:storedUser.password }
-  })
+axios.get(`http://localhost:8080/api/users/${userId}`, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    })
   .then(res => {
+    console.log(res.data);
     const updatedUser = res.data;
     setPoints(updatedUser.points);
     setTotalWorkouts(updatedUser.totalWorkouts);
@@ -44,17 +50,18 @@ export default function Home({ user }) {
   .catch(err => {
     console.error('Грешка при зареждане на потребител:', err);
   });
-
-}, [userId, username, password]);
+});
+}, [User,userId]);
 
   const handleAddHP = () => {
-  const storedUser = JSON.parse(localStorage.getItem('user'));
-  axios.put(`http://localhost:8081/api/cars/update-horsepower/${storedUser.userId}`, {
-    auth: {
-      username: storedUser.username,
-      password: storedUser.password
-    }
-  })
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+  const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+  axios.put(`http://localhost:8080/api/cars/update-horsepower/${userId}`, {}, config)
   .then(res => {
     setCar(res.data);
     setPoints(prev => prev - 10);
@@ -103,7 +110,7 @@ const calculateWorkoutRank = (totalWorkouts) => {
         <div className="car-info">
           <h3>Selected Car</h3>
           <img
-            src={`http://localhost:8081${car.baseCar.imageUrl}`}
+            src={`http://localhost:8080${car.baseCar.imageUrl}`}
             alt={car.carName}
             style={{ width: 200, borderRadius: 10 }}
           />
@@ -125,5 +132,5 @@ const calculateWorkoutRank = (totalWorkouts) => {
     
     
 
-  );
+  )
 }
