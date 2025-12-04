@@ -13,6 +13,7 @@ const navigate = useNavigate();
 useEffect(() =>{
   
  const storedUser = JSON.parse(localStorage.getItem('user'));
+ const token = localStorage.getItem('token');
     if (!storedUser || !storedUser.username) {
        navigate("/login");   
        return;
@@ -22,14 +23,11 @@ useEffect(() =>{
 
 console.log(storedUser);
 axios.get(`http://localhost:8080/api/users/userWorkouts/${storedUser.userId}`,{
-  auth:{ 
-    username:user.username,
-    password:user.password
-  }
-
-}
-
-).then(res => setWorkouts(res.data))
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    })
+    .then(res => setWorkouts(res.data))
       .catch(err => console.error('Грешка при зареждане на тренировки:', err));
   } , []);
 
