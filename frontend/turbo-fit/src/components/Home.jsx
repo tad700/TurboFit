@@ -14,6 +14,7 @@ export default function Home({User}) {
   useEffect(() => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
   const token = localStorage.getItem('token');
+  console.log(`${process.env.REACT_APP_API_URL}`)
   const userId = localStorage.getItem('userId');
     if (!storedUser || !storedUser.userId || !token) {
       navigate('/login');
@@ -21,7 +22,7 @@ export default function Home({User}) {
     }
   setUsername(storedUser.username || '');
 
-axios.get(`http://localhost:8080/api/users/${userId}/car`, {
+axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}/car`, {
         headers: {
             'Authorization': `Bearer ${token}` 
         }
@@ -35,7 +36,7 @@ axios.get(`http://localhost:8080/api/users/${userId}/car`, {
     setCar(null);
   }
 
-axios.get(`http://localhost:8080/api/users/${userId}`, {
+axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
         headers: {
             'Authorization': `Bearer ${token}` 
         }
@@ -61,7 +62,7 @@ axios.get(`http://localhost:8080/api/users/${userId}`, {
         'Authorization': `Bearer ${token}`
       }
     };
-  axios.put(`http://localhost:8080/api/cars/update-horsepower/${userId}`, {}, config)
+  axios.put(`${process.env.REACT_APP_API_URL}/api/cars/update-horsepower/${userId}`, {}, config)
   .then(res => {
     setCar(res.data);
     setPoints(prev => prev - 10);
@@ -110,7 +111,7 @@ const calculateWorkoutRank = (totalWorkouts) => {
         <div className="car-info">
           <h3>Selected Car</h3>
           <img
-            src={`http://localhost:8080${car.baseCar.imageUrl}`}
+            src={`${process.env.REACT_APP_API_URL}${car.baseCar.imageUrl}`}
             alt={car.carName}
             style={{ width: 200, borderRadius: 10 }}
           />

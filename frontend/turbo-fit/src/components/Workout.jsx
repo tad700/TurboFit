@@ -41,7 +41,7 @@ export default function Workout() {
     const handleStartWorkout = async () => {
         try {
             const res = await axios.post(
-                `http://localhost:8080/api/workout/start/${storedUser.userId}`,
+                `${process.env.REACT_APP_API_URL}/api/workout/start/${storedUser.userId}`,
                 {},
                 {
         headers: {
@@ -90,7 +90,7 @@ export default function Workout() {
 
         
         await axios.post(
-            `http://localhost:8080/api/exercises/addToWorkout/${workoutId}`,
+            `${process.env.REACT_APP_API_URL}/api/exercises/addToWorkout/${workoutId}`,
             exercisePayloads,
             {
         headers: {
@@ -100,7 +100,7 @@ export default function Workout() {
 
         
         const res = await axios.post(
-            `http://localhost:8080/api/workout/${workoutId}/finish`,
+            `${process.env.REACT_APP_API_URL}/api/workout/${workoutId}/finish`,
             {
                 name:workoutName
             },
@@ -139,7 +139,7 @@ const handleCancel = () => {
 
     const handleAddExerciseClick = async () => {
         try {
-            const res = await axios.get('http://localhost:8080/api/exercises', {
+            const res = await axios.get('${process.env.REACT_APP_API_URL}/api/exercises', {
                 auth: {
                     username: storedUser.username,
                     password: storedUser.password,

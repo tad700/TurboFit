@@ -19,7 +19,7 @@ const[muscleGroup,setMuscleGroup] = useState('');
 const handleDeleteUser = () => {
    
   axios
-    .delete(`http://localhost:8080/admin/delete/user/${username}`,
+    .delete(`${process.env.REACT_APP_API_URL}/admin/delete/user/${username}`,
         {
             auth:{
                 username: storedUser.username,
@@ -41,7 +41,7 @@ const handleDeleteUser = () => {
 const handleAddCar = () => {
   axios
     .post(
-      'http://localhost:8080/admin/addCar/',
+      `${process.env.REACT_APP_API_URL}/admin/addCar/`,
       {
         carName: addCarName,
         horsePower: carHP,
@@ -68,7 +68,7 @@ const handleAddCar = () => {
 const handleDeleteCar = () => {
   axios
     .delete(
-      `http://localhost:8080/admin/delete/car/${deleteCarName}`,
+      `${process.env.REACT_APP_API_URL}/admin/delete/car/${deleteCarName}`,
       {
         auth: {
           username: storedUser.username,
@@ -92,7 +92,7 @@ const handleAddExercise = () => {
 
   axios
     .post(
-      'http://localhost:8080/admin/createExercise/',
+      `${process.env.REACT_APP_API_URL}/admin/createExercise/`,
       {
         name: newExerciseName,
         muscleGroup: muscleGroup
@@ -119,7 +119,7 @@ const handleAddExercise = () => {
 const handledeleteExercise = () => {
   axios
     .delete(
-      `http://localhost:8080/admin/delete/exercise/${deleteExerciseName}`,
+      `${process.env.REACT_APP_API_URL}/admin/delete/exercise/${deleteExerciseName}`,
       {
         auth: {
           username: storedUser.username,

@@ -130,7 +130,7 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).save(user);
 
         assertNotNull(user.getUserCar(), "Поставената car не трябва да е null");
-        assertEquals(carId, user.getUserCar().getId());
+        assertEquals(carId, user.getUserCar().getBaseCar().getCarId());
         assertEquals("Ferrari", user.getUserCar().getBaseCar().getCarName());
 
         assertEquals(userId, dto.getUserId());

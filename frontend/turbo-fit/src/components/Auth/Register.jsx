@@ -21,7 +21,7 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/register', data);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, data);
       alert('Успешно регистриран:', response.data);
       navigate("/login")
     } catch (error) {
