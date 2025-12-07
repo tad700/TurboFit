@@ -6,10 +6,13 @@ import { useNavigate } from 'react-router-dom';
 export default function SelectCar({ userId }) {
   const [cars, setCars] = useState([]);
   const [user,setUser] = useState({username: '',password: ''});
+  const [token,setToken]=useState("");
 const navigate = useNavigate();
   useEffect(() => {
    
         const storedUser = JSON.parse(localStorage.getItem('user'));
+        console.log(storedUser);
+        const token = localStorage.getItem('token');
     if (!storedUser || !storedUser.username) {
        navigate("/login");   
        return;
@@ -22,26 +25,28 @@ const navigate = useNavigate();
       return;
     }
     console.log("User " +storedUser.username)
-    axios.get('http://localhost:8080/api/cars', {
-  auth: {
-    username: storedUser.username,
-    password: storedUser.password
-  }
-})
-      .then(res => setCars(res.data))
+    axios.get(`${process.env.REACT_APP_API_URL}/api/cars`, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    })
+      .then(res => {
+        setCars(res.data);
+    console.log(res.data);})
+
       .catch(err => console.error('Грешка при зареждане на коли:', err));
   }, []);
    const handleSelect = (carId) => {
     console.log("Изпращам PUT заявка за userId:", userId, "carId:", carId);
-
+ 
 axios.put(
-  `http://localhost:8080/api/users/${userId}/selectCar/${carId}`,{
-    auth: {
-      username: user.username, 
-      password: user.password 
-    }
-  }
-)
+ 
+  `${process.env.REACT_APP_API_URL}/api/users/${userId}/selectCar/${carId}`,{
+    
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    })
       .then(() => {
         alert('Кола избрана успешно!');
         navigate("/")
@@ -61,7 +66,7 @@ axios.put(
             key={car.carId}
             onClick={() => handleSelect(car.carId)}
           >
-            <img src={`http://localhost:8080${car.imageUrl}`} alt={car.carName} />
+            <img src={`/cars/${car.imageUrl}`} alt={car.carName} />
             <h4>{car.carName}</h4>
             <p>{car.horsePower} HP</p>
           </div>

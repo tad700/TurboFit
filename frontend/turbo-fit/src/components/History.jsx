@@ -21,8 +21,7 @@ useEffect(() =>{
       setUser(storedUser);
 
 
-console.log(storedUser);
-axios.get(`http://localhost:8080/api/users/userWorkouts/${storedUser.userId}`,{
+axios.get(`${process.env.REACT_APP_API_URL}/api/users/userWorkouts/${storedUser.userId}`,{
         headers: {
             'Authorization': `Bearer ${token}` 
         }

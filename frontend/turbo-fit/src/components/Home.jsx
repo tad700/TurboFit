@@ -14,27 +14,14 @@ export default function Home({User}) {
   useEffect(() => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
   const token = localStorage.getItem('token');
-  console.log(`${process.env.REACT_APP_API_URL}`)
   const userId = localStorage.getItem('userId');
     if (!storedUser || !storedUser.userId || !token) {
       navigate('/login');
       return;
     }
-  setUsername(storedUser.username || '');
 
-axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}/car`, {
-        headers: {
-            'Authorization': `Bearer ${token}` 
-        }
-    })
-.then(res => {
-  setCar(res.data);
-})
-.catch(err => {
-  console.error('Error loading car:', err.response || err);
-  if (err.response?.status === 404) {
-    setCar(null);
-  }
+
+  setUsername(storedUser.username || '');
 
 axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
         headers: {
@@ -42,8 +29,8 @@ axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
         }
     })
   .then(res => {
-    console.log(res.data);
     const updatedUser = res.data;
+    setCar(res.data.car);
     setPoints(updatedUser.points);
     setTotalWorkouts(updatedUser.totalWorkouts);
     console.log(totalWorkouts)
@@ -51,7 +38,6 @@ axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
   .catch(err => {
     console.error('Грешка при зареждане на потребител:', err);
   });
-});
 }, [User,userId]);
 
   const handleAddHP = () => {
@@ -64,7 +50,10 @@ axios.get(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
     };
   axios.put(`${process.env.REACT_APP_API_URL}/api/cars/update-horsepower/${userId}`, {}, config)
   .then(res => {
-    setCar(res.data);
+    setCar(prevCar => ({
+      ...prevCar,
+      customHorsePower: res.data.horsePower
+    }));
     setPoints(prev => prev - 10);
   })
   .catch(err => {
@@ -111,7 +100,7 @@ const calculateWorkoutRank = (totalWorkouts) => {
         <div className="car-info">
           <h3>Selected Car</h3>
           <img
-            src={`${process.env.REACT_APP_API_URL}${car.baseCar.imageUrl}`}
+            src={`/cars/${car.baseCar.imageUrl}`}
             alt={car.carName}
             style={{ width: 200, borderRadius: 10 }}
           />

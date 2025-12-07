@@ -24,8 +24,8 @@ const Login = ({setIsLoggedIn, setLoggedUser}) => {
 
     try {
     
-      const response = await axios.post('http://localhost:8080/auth/login', data,);
-  console.log(`${process.env.REACT_APP_API_URL}`)
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, data,);
+  
       console.log('Login response:', response.data);
       localStorage.setItem('token',response.data.token);
       localStorage.setItem('userId',response.data.userId);

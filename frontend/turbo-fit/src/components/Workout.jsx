@@ -139,12 +139,11 @@ const handleCancel = () => {
 
     const handleAddExerciseClick = async () => {
         try {
-            const res = await axios.get('${process.env.REACT_APP_API_URL}/api/exercises', {
-                auth: {
-                    username: storedUser.username,
-                    password: storedUser.password,
-                },
-            });
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/exercises`, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    })
             setAllExercises(res.data);
             setShowExerciseList(true);
             setMessage('');
