@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Popup from './Popup'
+
 import './workout.css';
 
 export default function Workout() {
