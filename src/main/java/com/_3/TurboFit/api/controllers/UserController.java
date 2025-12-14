@@ -1,11 +1,9 @@
 package com._3.TurboFit.api.controllers;
 
-import com._3.TurboFit.api.dto.CarDTO;
-import com._3.TurboFit.api.dto.UserDTO;
-import com._3.TurboFit.api.dto.UserResponseDTO;
-import com._3.TurboFit.api.dto.WorkoutDTO;
+import com._3.TurboFit.api.dto.*;
 import com._3.TurboFit.api.models.UserCar;
 import com._3.TurboFit.api.models.Workout;
+import com._3.TurboFit.api.service.ExerciseService;
 import com._3.TurboFit.api.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -22,9 +20,11 @@ import java.util.List;
 
 public class UserController {
     private UserService userService;
-    @Autowired
-    public UserController(UserService userService) {
+    private ExerciseService exerciseService;
+
+    public UserController(UserService userService, ExerciseService exerciseService) {
         this.userService = userService;
+        this.exerciseService = exerciseService;
     }
 
     @GetMapping("{userId}/car")
@@ -48,6 +48,11 @@ public class UserController {
     @GetMapping("/userWorkouts/{userId}")
     public ResponseEntity<List<WorkoutDTO>> userWorkouts(@PathVariable Long userId){
         return new ResponseEntity<>(userService.getUserWorkouts(userId),HttpStatus.OK);
+    }
+    @PostMapping("/createExercise/")
+    public ResponseEntity<ExerciseResponseDTO> createExercise(@RequestBody ExerciseCreateDTO exerciseCreateDTO){
+        return new ResponseEntity<>(exerciseService.createExercise(exerciseCreateDTO), HttpStatus.CREATED);
+
     }
 
 

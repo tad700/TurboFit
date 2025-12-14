@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Popup from './Popup'
 import './workout.css';
 
 export default function Workout() {
     const [workoutStarted, setWorkoutStarted] = useState(false);
+    const  [newExercisePopup, setNewExercisePopup]= useState(false);
     const [time, setTime] = useState('');
     const [workout, setWorkout] = useState(null);
     const [allExercises, setAllExercises] = useState([]);
     const [showExerciseList, setShowExerciseList] = useState(false);
     const [workoutName, setWorkoutName] = useState('');
-
+const[newExerciseName,setNewExerciseName] = useState('');
+const[muscleGroup,setMuscleGroup] = useState('');
     const [workoutExercises, setWorkoutExercises] = useState([]);
 
     const [message, setMessage] = useState('');
@@ -196,6 +199,50 @@ const handleCancel = () => {
         setMessage('Exercise removed from workout.');
     };
 
+    const handleCreateNewExercise = async () => {
+  return axios
+    .post(
+      `${process.env.REACT_APP_API_URL}/api/users/createExercise/`,
+      {
+        name: newExerciseName,
+        muscleGroup: muscleGroup
+     
+      },
+      {
+    headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+      }
+    )
+    .then(res => {
+          console.log("Creating exercise "+newExerciseName)
+        console.log(res.data)
+       
+})
+    .catch(err =>
+      console.error('Грешка при добавяне на упражнение:', err)
+    );
+    
+};
+const  handleBackAndRefreshExercises = async ()  =>{
+        setNewExercisePopup(false);
+        await handleAddExerciseClick();
+
+}
+const  handleSaveAndRefreshExercises = async ()  =>{
+    try{
+        await handleCreateNewExercise();
+        await handleAddExerciseClick();
+             setNewExercisePopup(false);
+    }catch(err){
+        console.error(err);
+    }
+     
+   
+
+
+}
+
 
     return (
         <div className="start-workout-screen">
@@ -216,27 +263,65 @@ const handleCancel = () => {
                     {message && <p className="message">{message}</p>}
 
                    {showExerciseList && (
-    <>
-        <div className="exercise-backdrop" onClick={() => setShowExerciseList(false)} />
-        <div className="exercise-list">
-            <h3>Select an Exercise:</h3>
-            {Object.entries(groupedExercises).map(([group, exercises]) => (
-                <div key={group}>
-                    <h4>{group}</h4>
-                    {exercises.map((ex) => (
+            <>
+              <div className="exercise-backdrop" />
+
+              {!newExercisePopup ? (
+                
+                <div className="exercise-list">    
+                    <div className="exercise-list-header">
+                    <h3>
+                    Select Exercise
+                    <button onClick={() => setNewExercisePopup(true)}>New</button></h3>
+                    </div>
+                    <div className="exercise-list-body">
+                    {Object.entries(groupedExercises).map(([group, exs]) => (
+                    <div key={group} className='exercise-group'>
+                      <h4>{group}</h4>
+                      {exs.map(ex => (
                         <button
-                            key={ex.id}
-                            onClick={() => handleSelectExerciseFromList(ex)}
+                          key={ex.id}
+                          onClick={() => handleSelectExerciseFromList(ex)}
                         >
-                            {ex.name}
+                          {ex.name}
                         </button>
-                    ))}
+                      ))}
+                    </div>
+                  ))}
+
+                    </div>
+                  
+                <div className="exercise-list-footer">
+                <button onClick={() => setShowExerciseList(false)}>
+                    Cancel
+                  </button>
                 </div>
-            ))}
-            <button onClick={() => setShowExerciseList(false)}>Cancel</button>
-        </div>
-    </>
-)}
+               
+                </div>
+              ) : (
+                <div className="exercise-list">
+                  <h3>New Exercise</h3>
+
+                  <input
+                    placeholder="Exercise name"
+                    value={newExerciseName}
+                    onChange={e => setNewExerciseName(e.target.value)}
+                  />
+
+                  <input
+                    placeholder="Muscle group"
+                    value={muscleGroup}
+                    onChange={e => setMuscleGroup(e.target.value)}
+                  />
+
+                  <button onClick={handleSaveAndRefreshExercises}>Save</button>
+                  <button onClick={handleBackAndRefreshExercises}>
+                    Back
+                  </button>
+                </div>
+              )}
+            </>
+          )}
                     <div className="workout-exercises-grid">
                         {workoutExercises.map((exercise, exerciseIndex) => (
                             <div key={exercise.id} className="exercise-card">

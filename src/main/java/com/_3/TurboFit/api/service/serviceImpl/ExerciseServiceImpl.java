@@ -77,13 +77,15 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public ExerciseResponseDTO createExercise(ExerciseCreateDTO exerciseCreateDTO) {
-        Exercise exercise = new Exercise();
-        exercise.setName(exerciseCreateDTO.getName());
-        exercise.setMuscleGroup(exerciseCreateDTO.getMuscleGroup());
+        if(exerciseRepository.existsByName(exerciseCreateDTO.getName())){
 
-        exerciseRepository.save(exercise);
-        return mapToExerciseResponseDTO(exercise);
-
+            throw new RuntimeException("Exercise with that name already exists");
+        }
+            Exercise exercise = new Exercise();
+            exercise.setName(exerciseCreateDTO.getName());
+            exercise.setMuscleGroup(exerciseCreateDTO.getMuscleGroup());
+            exerciseRepository.save(exercise);
+            return mapToExerciseResponseDTO(exercise);
 
 
     }

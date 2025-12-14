@@ -64,47 +64,100 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgb(255, 255, 255);
-    padding: 20px 25px;
+    padding: 10px 15px;
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     width: 320px;
     max-height: 500px;
-    overflow-y: auto;
-}
 
-.exercise-list h3 {
-    margin-top: 0;
-    text-align: center;
-    font-size: 20px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-}
-
-.exercise-list h4 {
-    margin-top: 20px;
-    font-size: 16px;
-    color: #444;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 4px;
 }
 
 .exercise-list button {
     display: block;
-    width: 100%;
     margin: 6px 0;
-    padding: 8px 12px;
+    padding:6px 0px;
     background-color: #e9ecef;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    text-align: left;
     transition: background-color 0.2s;
 }
 
 .exercise-list button:hover {
     background-color: #ced4da;
 }
+.create-exercise-buton{
+    text-align: right;
+    color: rgb(125, 125, 252);
+}
+.create-exercise-buton button{
+    text-align: right;
+    color: rgb(125, 125, 252);
+}
+.exercise-list-body{
+    max-height: 300px;
+    width: 100%;
+    overflow-y: auto;
+}
+.exercise-list-body button{
+    width: 100%;
+}
+.exercise-list-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exercise-list-footer button{
+    background-color: transparent;
+    text-align: center;
+    color: rgb(125, 125, 252);
+}
+
+.exercise-list-header h3 {
+    display: flex;
+    flex-direction: row;
+
+    margin-top: 0;
+    text-align: center;
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+.exercise-list-header h3 button{
+    position: absolute;
+    top: 0%;
+    left: 70%;
+    width: fit-content;
+    background-color: transparent;
+    color: #007bff;
+}
+.exercise-list h3 button:hover{
+    transform: scale(1.2);
+    background-color: transparent;
+}
+
+
+.exercise-group{
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
+    width: 100%;
+}
+.exercise-group button{
+    width: 100%;
+}
+.exercise-group h4{
+    margin-top: 10px;
+    font-size: 24px;
+    color: #444;
+    width:70%;
+    border-bottom: 1px solid #c2baba;
+    border-top: 1px solid #c2baba;
+    padding-bottom: 4px;
+}
+
 
 .workout-exercises-grid {
     display: grid;
